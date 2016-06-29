@@ -1,0 +1,34 @@
+{
+  "id": "${mesosid}",
+  "cpus": 2,
+  "mem": 1024,
+  "instances": 2,
+  "env": {
+      "HOSTENV": "${environment}",
+      "DJANGO_SETTINGS_MODULE": "askme.settings.${environment}"
+    },
+
+  "ports": [
+    0
+  ],
+
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "docker-registry.askme.com/${project}/${repo}:${tag}",
+      "forcePullImage": true,
+      "privileged": true,
+      "network": "BRIDGE",
+      "portMappings": [{
+        "containerPort": 9055,
+        "hostPort": 0,
+        "protocol": "tcp"
+      }],
+      "parameters": [{
+        "key": "publish-all",
+        "value": "true"
+      }]
+    }
+
+  }
+}
